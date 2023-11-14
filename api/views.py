@@ -86,7 +86,7 @@ def comment(request):
 
 @api_view(['GET'])
 def showcomment(request):
-    query = Post.objects.all().order_by('-id').values()
+    query = Comment.objects.all().values()
     serializer = commentModelSerializer(query, many=True)
     return Response(serializer.data)
 
