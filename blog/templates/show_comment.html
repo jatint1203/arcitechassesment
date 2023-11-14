@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+<style>
+    table {
+        margin: 0 auto;
+        font-size: large;
+        border: 1px solid black;
+    }
+
+    h1 {
+        text-align: center;
+        color: #006600;
+        font-size: xx-large;
+        font-family: 'Gill Sans',
+            'Gill Sans MT', ' Calibri',
+            'Trebuchet MS', 'sans-serif';
+    }
+
+    td {
+        background-color: #E4F5D4;
+        border: 1px solid black;
+    }
+
+    th,
+    td {
+        font-weight: bold;
+        border: 1px solid black;
+        padding: 10px;
+        text-align: center;
+    }
+
+    td {
+        font-weight: lighter;
+    }
+</style>
+
+{% endblock head %}
+
+{% block body %}
+
+<h2 style="margin: 10px; margin-bottom: 40; text-align: center; color: red;">Comments</h2>
+
+<table>
+
+
+
+
+    <table id='table'>
+
+        </section>
+
+       
+        <tr>
+            
+           
+            <th>Author</th>
+            <th>Content</th>
+            <th>Created_At</th>
+
+         
+
+        </tr>
+
+        <tbody id='get-data'>
+
+        </tbody>
+    </table>
+
+
+    <script>
+
+
+        url = 'http://127.0.0.1:8000/api/showcomment';
+
+        let task_list = fetch(url).then(response => response.json()).then(function (data) {
+
+            console.log(data)
+
+            let placeholder = document.querySelector("#get-data");
+            let out = "";
+            for (let datas of data) {
+                out += `
+         <tr>
+        
+   
+       
+            <td>${datas.author}</td>
+            <td>${datas.content}</td>
+            <td>${datas.created_at}</td>
+         
+         </tr>
+      `;
+            }
+
+            placeholder.innerHTML = out;
+
+        }
+
+        )
+ 
+    
+ 
+ 
+    </script>
+
+
+    {% endblock body %}

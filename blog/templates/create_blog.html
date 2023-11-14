@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+
+{% block head %}
+
+<style>
+  .form_style {
+
+    width: 60%;
+    margin: 40px;
+
+  }
+</style>
+
+{% endblock head %}
+
+{% block body %}
+
+
+
+<form id="form">
+
+  <div class="form_style">
+    <div class="mb-4">
+      <label for="formGroupExampleInput" class="form-label">Title *</label>
+      <input type="text" class="form-control" id="title" name="title" placeholder="Enter Title of the blog" required>
+    </div>
+    <div class="mb-3">
+      <label for="formGroupExampleInput2" class="form-label">Author *</label>
+      <input type="text" class="form-control" id="author" name="author" placeholder="Enter Author" required>
+
+
+    </div><div class="mb-3">
+      <label for="formGroupExampleInput2" class="form-label">Content *</label>
+      <input type="text" class="form-control" id="content" name="content" placeholder="Enter Content" required>
+
+
+    </div>
+    </div><div class="mb-3">
+      <label for="formGroupExampleInput2" class="form-label">Creted_At *</label>
+      <input type="text" class="form-control" id="created" name="created" placeholder="Enter created at" required>
+
+
+    </div>
+  
+
+
+    </div>
+
+    <button type="button" id="submit" class="btn btn-primary" onclick="field_check();">Submit</button>
+  </div>
+
+  <script>
+
+    function field_check(){
+
+      if(document.getElementById('title').value != ''){
+
+       
+        create_task();
+      }
+      else{alert("Fill All the Mandatory Fields");}
+    
+      
+    }
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+           
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    var csrftoken = getCookie('csrftoken');
+
+     
+    function create_task() {
+
+    
+      var title = document.getElementById('title').value
+      var created = document.getElementById('created').value
+      var author = document.getElementById('author').value
+      var content = document.getElementById('content').value
+
+
+       console.log(title, created, author,content);
+
+      var url = "http://127.0.0.1:8000/api/task_create"; 
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({ 'title': title, 'author': author, 'content': content, 'created_at':created })
+      }
+      ).then(alert("Task Created Successfully !"),
+      window.location.reload()
+      )
+
+    }
+
+
+
+  </script>
+
+</form>
+
+
+{% endblock body %}
